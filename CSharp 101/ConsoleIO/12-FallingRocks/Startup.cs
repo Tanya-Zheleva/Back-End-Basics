@@ -6,15 +6,18 @@
 
     public class Startup
     {
+        private const int ScoreUpdateTicks = 17;
+        private const int RockAddTicks = 10;
+
         private const int DirectionLeft = -1;
         private const int DirectionRight = 1;
 
         private static readonly char[] rockSymbols = { '^', '@', '*', '&', '+', '%', '$', '#', '!', '.', ';', '-' };
-        private static readonly int[] rockWidths = { 1, 3, 5, 7 };
+        private static readonly int[] rockSizes = { 1, 3, 5, 7 };
 
         private static Random randomGenerator = new Random();
         private static Dwarf dwarf = new Dwarf();
-        private static Queue<Rock> rocks = new Queue<Rock>();
+        private static List<Rock> rocks = new List<Rock>();
 
         private static int timer = 1;
         private static int score = 0;
@@ -78,7 +81,7 @@
 
         private static void UpdateScore()
         {
-            if (timer % 17 == 0)
+            if (timer % ScoreUpdateTicks == 0)
             {
                 score++;
             }
@@ -88,11 +91,10 @@
         {
             foreach (Rock rock in rocks)
             {
-                bool hitsLeft = rock.Y == dwarf.Cy && rock.X == dwarf.LeftArm;
-                bool hitsCenter = rock.Y == dwarf.Cy && rock.X == dwarf.Cx;
-                bool hitsRight = rock.Y == dwarf.Cy && rock.X == dwarf.RightArm;
+                bool hitsLeft = rock.Y == dwarf.Cy && (dwarf.LeftArm >= rock.LeftEnd && dwarf.LeftArm <= rock.RightEnd);
+                bool hitsRight = rock.Y == dwarf.Cy && (dwarf.RightArm >= rock.LeftEnd && dwarf.RightArm <= rock.RightEnd);
 
-                if (hitsLeft || hitsCenter || hitsRight)
+                if (hitsLeft || hitsRight)
                 {
                     hasCollision = true;
                     return;
@@ -102,26 +104,28 @@
 
         private static void AddRock()
         {
-            if (timer % 3 == 0)
+            if (timer % RockAddTicks == 0)
             {
                 int symbolIndex = randomGenerator.Next(rockSymbols.Length);
                 char symbol = rockSymbols[symbolIndex];
 
-                int x = randomGenerator.Next(Console.WindowWidth - 1);
+                int sizeIndex = randomGenerator.Next(rockSizes.Length);
+                int size = rockSizes[sizeIndex];
+
+                int x = randomGenerator.Next(Console.WindowWidth - size / 2 - 1);
                 int y = 0;
 
-                Rock rock = new Rock { X = x, Y = y, Symbol = symbol };
-                rocks.Enqueue(rock);
-           k}
-           k}
+                Rock rock = new Rock { X = x, Y = y, Symbol = symbol, Size = size };
+                rocks.Add(rock);
+            }
         }
 
         private static void DrawRocks()
         {
             foreach (Rock rock in rocks)
             {
-                Console.SetCursorPosition(rock.X, rock.Y);
-                Console.Write(rock.Symbol);
+                Console.SetCursorPosition(rock.LeftEnd, rock.Y);
+                Console.Write(new string(rock.Symbol, rock.Size));
             }
         }
 
@@ -130,11 +134,6 @@
             foreach (Rock rock in rocks)
             {
                 rock.Y++;
-            }
-
-            while (rocks.Count > 0 && rocks.Peek().Y == Console.WindowWidth - 1)
-            {
-                rocks.Dequeue();
             }
         }
 
@@ -159,6 +158,7 @@
         private static void DrawDwarf()
         {
             Console.SetCursorPosition(dwarf.Cx, dwarf.Cy);
+
             Console.Write(0);
 
             Console.SetCursorPosition(dwarf.LeftArm, dwarf.Cy);
