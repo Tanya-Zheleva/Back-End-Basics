@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E9E7A29-4E97-4D61-8790-D1C9364D4B5B}</ProjectGuid>
+    <ProjectGuid>{AEF9777E-1581-4BBF-BD53-EAE1CF05BEA2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>_12_DecimalToBinary</RootNamespace>
-    <AssemblyName>12-DecimalToBinary</AssemblyName>
+    <RootNamespace>_16_TrailingZero</RootNamespace>
+    <AssemblyName>16-TrailingZero</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

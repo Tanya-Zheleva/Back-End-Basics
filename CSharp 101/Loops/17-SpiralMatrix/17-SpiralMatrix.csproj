@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E9E7A29-4E97-4D61-8790-D1C9364D4B5B}</ProjectGuid>
+    <ProjectGuid>{237592A4-6E4C-4CF5-963A-272B0B1349F6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>_12_DecimalToBinary</RootNamespace>
-    <AssemblyName>12-DecimalToBinary</AssemblyName>
+    <RootNamespace>_17_SpiralMatrix</RootNamespace>
+    <AssemblyName>17-SpiralMatrix</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

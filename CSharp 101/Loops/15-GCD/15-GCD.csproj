@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E9E7A29-4E97-4D61-8790-D1C9364D4B5B}</ProjectGuid>
+    <ProjectGuid>{CDE0B50C-7065-4282-8FB7-50982D153278}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>_12_DecimalToBinary</RootNamespace>
-    <AssemblyName>12-DecimalToBinary</AssemblyName>
+    <RootNamespace>_15_GCD</RootNamespace>
+    <AssemblyName>15-GCD</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
