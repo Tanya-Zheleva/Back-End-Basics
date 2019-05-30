@@ -20,10 +20,70 @@
             int rowSequence = GetMaxRowSequence(matrix);
             int colSequence = GetMaxColSequence(matrix);
             int mainDiagonalSequance = GetMaxMainDiagonalSequence(matrix);
+            int secondaryDiagonalSubsequence = GetMaxSecondaryDiagonalSubsequence(matrix);
 
-            Console.WriteLine(rowSequence);
-            Console.WriteLine(colSequence);
-            Console.WriteLine(mainDiagonalSequance);
+            int max = rowSequence > colSequence ? rowSequence : colSequence;
+            max = max > mainDiagonalSequance ? max : mainDiagonalSequance;
+            max = max > secondaryDiagonalSubsequence ? max : secondaryDiagonalSubsequence;
+
+            Console.WriteLine(max);
+        }
+
+        private static int GetMaxSecondaryDiagonalSubsequence(int[][] matrix)
+        {
+            int best = 1;
+
+            for (int i = 1; i < matrix.Length; i++)
+            {
+                int startRow = i;
+                int current = 1;
+
+                for (int c = 0; c < i; c++)
+                {
+                    if (matrix[startRow][c] == matrix[startRow - 1][c + 1])
+                    {
+                        current++;
+                    }
+                    else
+                    {
+                        current = 1;
+                    }
+
+                    startRow--;
+                }
+
+                if (current > best)
+                {
+                    best = current;
+                }
+            }
+
+            for (int  i = 1;  i < matrix.Length;  i++)
+            {
+                int startCol = i;
+                int current = 1;
+
+                for (int r = matrix.Length - 1; r > i; r--)
+                {
+                    if (matrix[r][startCol] == matrix[r - 1][startCol + 1])
+                    {
+                        current++;
+                    }
+                    else
+                    {
+                        current = 1;
+                    }
+
+                    startCol++;
+                }
+
+                if (current > best)
+                {
+                    best = current;
+                }
+            }
+
+            return best;
         }
 
         private static int GetMaxMainDiagonalSequence(int[][] matrix)

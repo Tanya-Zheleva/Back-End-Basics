@@ -16,6 +16,34 @@
             {
                 matrix[r] = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
             }
+
+            int best = 0;
+            SearchMatrix(0, 0, matrix, ref best);
+        }
+
+        private static void SearchMatrix(int row, int col, int[][] matrix, ref int best)
+        {
+            if (row >= matrix.Length || col >= matrix[0].Length || row < 0 || col < 0)
+            {
+                return;
+            }
+
+            if (row + 1 < matrix.Length)
+            {
+                SearchMatrix(row + 1, col, matrix, ref best);
+            }
+
+            if (col + 1 < matrix[0].Length)
+            {
+                SearchMatrix(row, col + 1, matrix, ref best);
+            }
+
+            if (col - 1 > 0)
+            {
+                SearchMatrix(row, col - 1, matrix, ref best);
+            }
+
+
         }
     }
 }
