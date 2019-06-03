@@ -7,43 +7,62 @@
     {
         public static void Main(string[] args)
         {
-            int[] dimesions = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+            int[] dimesions = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
             int rows = dimesions[0];
             int cols = dimesions[1];
             int[][] matrix = new int[rows][];
 
             for (int r = 0; r < rows; r++)
             {
-                matrix[r] = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                matrix[r] = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
             }
 
-            int best = 0;
-            SearchMatrix(0, 0, matrix, ref best);
+            bool[][] visited = new bool[rows][];
+
+            for (int r = 0; r < rows; r++)
+            {
+                visited[r] = new bool[cols];
+
+                for (int c = 0; c < cols; c++)
+                {
+                    visited[r][c] = false;
+                }
+            }
+
+            int maxArea = 0;
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    int value = matrix[r][c];
+                    int currentArea = SearchMatrix(value, r, c, matrix, visited);
+
+                    if (currentArea > maxArea)
+                    {
+                        maxArea = currentArea;
+                    }
+                }
+            }
+
+            Console.WriteLine(maxArea);
         }
 
-        private static void SearchMatrix(int row, int col, int[][] matrix, ref int best)
+        private static int SearchMatrix(int value, int row, int col, int[][] matrix, bool[][] visited)
         {
-            if (row >= matrix.Length || col >= matrix[0].Length || row < 0 || col < 0)
+            bool isOutOfRange = row < 0 || row >= matrix.Length || col < 0 || col >= matrix[0].Length;
+
+            if (isOutOfRange || visited[row][col] || matrix[row][col] != value)
             {
-                return;
+                return 0;
             }
 
-            if (row + 1 < matrix.Length)
-            {
-                SearchMatrix(row + 1, col, matrix, ref best);
-            }
+            visited[row][col] = true;
 
-            if (col + 1 < matrix[0].Length)
-            {
-                SearchMatrix(row, col + 1, matrix, ref best);
-            }
-
-            if (col - 1 > 0)
-            {
-                SearchMatrix(row, col - 1, matrix, ref best);
-            }
-
-
+            return SearchMatrix(value, row, col + 1, matrix, visited) + // Check right
+                SearchMatrix(value, row, col - 1, matrix, visited) + // Check left
+                SearchMatrix(value, row + 1, col, matrix, visited) + // Check botton
+                SearchMatrix(value, row - 1, col, matrix, visited) + 1; // Check top
         }
     }
 }
